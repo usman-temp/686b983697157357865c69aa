@@ -1,30 +1,20 @@
-import { config } from '@/app/config/config';
+export const authorData = {
+  name: 'John Doe',
+  role: 'Lead Developer',
+  bio: 'A passionate developer with 10+ years of experience in building scalable web applications.',
+  profileImage: '/vercel.svg'
+};
 
 export default function AboutUs() {
-  if (!config?.developerName) {
-    return (
-      <div className="p-4 bg-red-50 text-red-700" role="alert">
-        Developer information is currently unavailable
-      </div>
-    );
-  }
-
   return (
-    <section aria-labelledby="about-heading" className="max-w-4xl mx-auto p-6">
-      <h1 id="about-heading" className="text-3xl font-bold text-gray-900 mb-6">
-        About Our Project
-      </h1>
-      <div className="space-y-4 text-gray-600">
-        <p>
-          This project is developed by{' '}
-          <span className="font-semibold text-indigo-600" data-testid="developer-name">
-            {config.developerName}
-          </span>.
-        </p>
-        <p>
-          Our mission is to create accessible and maintainable software solutions
-          that prioritize user experience.
-        </p>
+    <section className="py-12 bg-white">
+      <div className="max-w-4xl mx-auto px-4">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">About Us</h2>
+        <div className="author-section" data-testid="author-section">
+          <p className="text-lg text-gray-600">
+            Meet our lead developer: <span className="font-semibold author-name">{authorData.name}</span>
+          </p>
+        </div>
       </div>
     </section>
   );
