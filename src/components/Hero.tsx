@@ -1,26 +1,46 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 export default function Hero() {
+  const [authorInfo, setAuthorInfo] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleFetchAuthor = async () => {
+    try {
+      const response = await fetch('/api/author');
+      if (!response.ok) throw new Error('Failed to fetch author');
+      const data = await response.json();
+      setAuthorInfo(`${data.name} - ${data.role}`);
+      setError(null);
+    } catch (err) {
+      setError('Error retrieving author information');
+      console.error('Fetch error:', err);
+    }
+  };
+
   return (
-    <section className="relative h-[80vh] flex items-center justify-center bg-gradient-to-r from-orange-500 to-amber-500">
-      <div className="text-center max-w-4xl px-4 z-10">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-5xl font-bold text-white mb-6 drop-shadow-lg"
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-center space-y-6">
+        <h1 className="text-4xl font-bold text-gray-900">Discover Our Team</h1>
+        <button
+          onClick={handleFetchAuthor}
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+          aria-label="Retrieve author information"
         >
-          Discover Culinary Magic with Every Recipe
-        </motion.h1>
-        <div className="flex gap-4 justify-center">
-          <button className="bg-white text-orange-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all">
-            Explore Recipes
-          </button>
-          <button className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-all">
-            Watch Video
-          </button>
-        </div>
+          Meet the Author
+        </button>
+        
+        {authorInfo && (
+          <div className="mt-4 p-4 bg-white rounded-lg shadow-md">
+            <p className="text-lg text-gray-700">{authorInfo}</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="mt-4 p-4 bg-red-100 text-red-700 rounded-lg">
+            ⚠️ {error}
+          </div>
+        )}
       </div>
-      <div className="absolute inset-0 bg-black/30" />
-    </section>
+    </div>
   );
 }
