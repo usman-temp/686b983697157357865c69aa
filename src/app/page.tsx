@@ -1,10 +1,12 @@
 import Hero from '@/components/Hero';
+import AboutUs from '@/components/AboutUs';
 
 export default function Home() {
   return (
-    <div className="overflow-hidden">
+    <main className="min-h-screen">
       <Hero />
-      {/* Other sections will be added here */}
-    </div>
+      <AboutUs />
+      {/* Existing content */}
+    </main>
   );
 }
